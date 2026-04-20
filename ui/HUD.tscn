@@ -1,0 +1,537 @@
+[gd_scene load_steps=10 format=3]
+
+[ext_resource type="Script" path="res://scripts/HUD.gd" id="1"]
+
+[sub_resource type="StyleBoxFlat" id="1"]
+bg_color = Color(0.06, 0.09, 0.14, 0.9)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.24, 0.63, 0.69, 0.9)
+
+[sub_resource type="StyleBoxFlat" id="2"]
+bg_color = Color(0.92, 0.52, 0.24, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="3"]
+bg_color = Color(0.14, 0.17, 0.22, 0.88)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.96, 0.66, 0.27, 0.95)
+
+[sub_resource type="StyleBoxFlat" id="4"]
+bg_color = Color(0.19, 0.22, 0.28, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.34, 0.39, 0.49, 1)
+
+[sub_resource type="StyleBoxFlat" id="5"]
+bg_color = Color(0.11, 0.13, 0.18, 0.95)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42, 0.74, 0.71, 0.95)
+
+[sub_resource type="StyleBoxFlat" id="6"]
+bg_color = Color(0.23, 0.27, 0.35, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.72, 0.77, 0.85, 0.35)
+
+[sub_resource type="StyleBoxFlat" id="7"]
+bg_color = Color(0.07, 0.1, 0.14, 0.94)
+corner_radius_top_left = 22
+corner_radius_top_right = 22
+corner_radius_bottom_right = 22
+corner_radius_bottom_left = 22
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.32, 0.82, 0.77, 0.9)
+
+[sub_resource type="StyleBoxFlat" id="8"]
+bg_color = Color(0.22, 0.26, 0.34, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.69, 0.76, 0.83, 0.35)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1")
+
+[node name="ForceSpawnButton" type="Button" parent="."]
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 126.0
+offset_bottom = 56.0
+text = "全刷怪"
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")
+
+[node name="TopCenterPanel" type="Panel" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 18.0
+offset_right = 260.0
+offset_bottom = 116.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("7")
+
+[node name="VBox" type="VBoxContainer" parent="TopCenterPanel"]
+offset_left = 20.0
+offset_top = 12.0
+offset_right = 500.0
+offset_bottom = 86.0
+theme_override_constants/separation = 8
+
+[node name="TimerLabel" type="Label" parent="TopCenterPanel/VBox"]
+layout_mode = 2
+text = "02:00"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(0.72, 0.86, 1, 1)
+
+[node name="WaveProgressBar" type="ProgressBar" parent="TopCenterPanel/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 18)
+show_percentage = false
+max_value = 1.0
+value = 0.0
+theme_override_styles/background = SubResource("4")
+theme_override_styles/fill = SubResource("2")
+
+[node name="WaveLabel" type="Label" parent="TopCenterPanel/VBox"]
+layout_mode = 2
+text = "第 1 波 / 共 5 波"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.92, 0.75, 0.39, 1)
+
+[node name="BottomBar" type="Panel" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -70.0
+offset_right = -16.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("5")
+
+[node name="Margin" type="MarginContainer" parent="BottomBar"]
+offset_left = 16.0
+offset_top = 12.0
+offset_right = -16.0
+offset_bottom = -12.0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBox" type="HBoxContainer" parent="BottomBar/Margin"]
+alignment = 1
+theme_override_constants/separation = 20
+
+[node name="HealthLabel" type="Label" parent="BottomBar/Margin/HBox"]
+layout_mode = 2
+text = "生命 100 / 100"
+theme_override_colors/font_color = Color(0.98, 0.95, 0.86, 1)
+
+[node name="LevelLabel" type="Label" parent="BottomBar/Margin/HBox"]
+layout_mode = 2
+text = "等级 1"
+theme_override_colors/font_color = Color(0.75, 0.95, 0.87, 1)
+
+[node name="ExperienceWrap" type="HBoxContainer" parent="BottomBar/Margin/HBox"]
+layout_mode = 2
+alignment = 1
+theme_override_constants/separation = 10
+
+[node name="ExperienceLabel" type="Label" parent="BottomBar/Margin/HBox/ExperienceWrap"]
+layout_mode = 2
+text = "经验"
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.77, 0.88, 1, 1)
+
+[node name="ExperienceBar" type="ProgressBar" parent="BottomBar/Margin/HBox/ExperienceWrap"]
+layout_mode = 2
+custom_minimum_size = Vector2(180, 12)
+size_flags_vertical = 4
+offset_top = 2.0
+show_percentage = false
+max_value = 5.0
+value = 0.0
+theme_override_styles/background = SubResource("4")
+theme_override_styles/fill = SubResource("2")
+
+[node name="EnemyLabel" type="Label" parent="BottomBar/Margin/HBox"]
+layout_mode = 2
+text = "敌人 0"
+theme_override_colors/font_color = Color(0.98, 0.68, 0.61, 1)
+
+[node name="WeaponLabel" type="Label" parent="BottomBar/Margin/HBox"]
+layout_mode = 2
+text = "标准手枪"
+theme_override_colors/font_color = Color(0.65, 0.96, 0.8, 1)
+
+[node name="AmmoLabel" type="Label" parent="BottomBar/Margin/HBox"]
+layout_mode = 2
+text = "弹药 30 / 30"
+theme_override_colors/font_color = Color(0.95, 0.88, 0.63, 1)
+
+[node name="ReviveLabel" type="Label" parent="BottomBar/Margin/HBox"]
+layout_mode = 2
+text = "复活 0"
+theme_override_colors/font_color = Color(1, 0.82, 0.48, 1)
+
+[node name="SkillLabel" type="Label" parent="BottomBar/Margin/HBox"]
+layout_mode = 2
+text = "脉冲 就绪"
+theme_override_colors/font_color = Color(0.74, 0.95, 1, 1)
+
+[node name="BossPanel" type="Panel" parent="."]
+visible = false
+offset_left = 300.0
+offset_top = 128.0
+offset_right = 980.0
+offset_bottom = 202.0
+theme_override_styles/panel = SubResource("3")
+
+[node name="BossNameLabel" type="Label" parent="BossPanel"]
+offset_left = 22.0
+offset_top = 10.0
+offset_right = 658.0
+offset_bottom = 36.0
+text = "深渊裂喉者"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 0.93, 0.78, 1)
+
+[node name="BossHealthBar" type="ProgressBar" parent="BossPanel"]
+offset_left = 24.0
+offset_top = 42.0
+offset_right = 656.0
+offset_bottom = 60.0
+show_percentage = false
+max_value = 100.0
+value = 100.0
+theme_override_styles/background = SubResource("4")
+theme_override_styles/fill = SubResource("2")
+
+[node name="BossHintLabel" type="Label" parent="BossPanel"]
+offset_left = 22.0
+offset_top = 58.0
+offset_right = 658.0
+offset_bottom = 78.0
+text = "注意首领的蓄力预警圈"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.91, 0.95, 1, 0.92)
+
+[node name="AnnouncementLabel" type="Label" parent="."]
+visible = false
+offset_left = 330.0
+offset_top = 214.0
+offset_right = 950.0
+offset_bottom = 276.0
+text = "首领逼近"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 30
+theme_override_outline_sizes/outline_size = 8
+theme_override_colors/font_outline_color = Color(0.02, 0.03, 0.04, 0.92)
+theme_override_colors/font_color = Color(1, 0.86, 0.52, 1)
+
+[node name="GameOverPanel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+process_mode = 3
+mouse_filter = 0
+
+[node name="Overlay" type="ColorRect" parent="GameOverPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.03, 0.05, 0.72)
+mouse_filter = 0
+
+[node name="CenterWrap" type="CenterContainer" parent="GameOverPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="GameOverPanel/CenterWrap"]
+custom_minimum_size = Vector2(420, 420)
+theme_override_styles/panel = SubResource("3")
+
+[node name="MarginContainer" type="MarginContainer" parent="GameOverPanel/CenterWrap/Panel"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 396.0
+offset_bottom = 396.0
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOverPanel/CenterWrap/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="TitleLabel" type="Label" parent="GameOverPanel/CenterWrap/Panel/MarginContainer/VBoxContainer"]
+text = "战斗结束"
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(1, 0.92, 0.75, 1)
+theme_override_font_sizes/font_size = 26
+
+[node name="GameOverLabel" type="Label" parent="GameOverPanel/CenterWrap/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "你已倒下。"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+theme_override_colors/font_color = Color(0.9, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 20
+
+[node name="RetryButton" type="Button" parent="GameOverPanel/CenterWrap/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "重新开始"
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")
+
+[node name="MenuButton" type="Button" parent="GameOverPanel/CenterWrap/Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "返回主界面"
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")
+
+[node name="UpgradePanel" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+process_mode = 3
+
+[node name="Panel" type="Panel" parent="UpgradePanel"]
+custom_minimum_size = Vector2(760, 420)
+theme_override_styles/panel = SubResource("5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UpgradePanel/Panel"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 736.0
+offset_bottom = 396.0
+theme_override_constants/separation = 18
+
+[node name="TitleLabel" type="Label" parent="UpgradePanel/Panel/VBoxContainer"]
+text = "选择强化"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(0.98, 0.95, 0.81, 1)
+
+[node name="OptionOne" type="Button" parent="UpgradePanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+text = "强化一"
+alignment = 0
+text_overrun_behavior = 1
+autowrap_mode = 3
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")
+
+[node name="OptionTwo" type="Button" parent="UpgradePanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+text = "强化二"
+alignment = 0
+text_overrun_behavior = 1
+autowrap_mode = 3
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")
+
+[node name="OptionThree" type="Button" parent="UpgradePanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+text = "强化三"
+alignment = 0
+text_overrun_behavior = 1
+autowrap_mode = 3
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")
+
+[node name="RefreshButton" type="Button" parent="UpgradePanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 52)
+text = "刷新选项"
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")
+
+[node name="SupplyPanel" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+process_mode = 3
+
+[node name="Panel" type="Panel" parent="SupplyPanel"]
+custom_minimum_size = Vector2(760, 420)
+theme_override_styles/panel = SubResource("7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SupplyPanel/Panel"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 736.0
+offset_bottom = 396.0
+theme_override_constants/separation = 18
+
+[node name="TitleLabel" type="Label" parent="SupplyPanel/Panel/VBoxContainer"]
+text = "波次补给"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(0.89, 0.99, 0.95, 1)
+
+[node name="OptionOne" type="Button" parent="SupplyPanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+text = "补给一"
+alignment = 0
+text_overrun_behavior = 1
+autowrap_mode = 3
+theme_override_styles/normal = SubResource("8")
+theme_override_styles/hover = SubResource("2")
+
+[node name="OptionTwo" type="Button" parent="SupplyPanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+text = "补给二"
+alignment = 0
+text_overrun_behavior = 1
+autowrap_mode = 3
+theme_override_styles/normal = SubResource("8")
+theme_override_styles/hover = SubResource("2")
+
+[node name="OptionThree" type="Button" parent="SupplyPanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+text = "补给三"
+alignment = 0
+text_overrun_behavior = 1
+autowrap_mode = 3
+theme_override_styles/normal = SubResource("8")
+theme_override_styles/hover = SubResource("2")
+
+[node name="ChestPanel" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+process_mode = 3
+
+[node name="Panel" type="Panel" parent="ChestPanel"]
+custom_minimum_size = Vector2(760, 420)
+theme_override_styles/panel = SubResource("3")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ChestPanel/Panel"]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 736.0
+offset_bottom = 396.0
+theme_override_constants/separation = 18
+
+[node name="TitleLabel" type="Label" parent="ChestPanel/Panel/VBoxContainer"]
+text = "宝箱奖励"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(1, 0.94, 0.79, 1)
+
+[node name="OptionOne" type="Button" parent="ChestPanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+text = "奖励一"
+alignment = 0
+text_overrun_behavior = 1
+autowrap_mode = 3
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")
+
+[node name="OptionTwo" type="Button" parent="ChestPanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+text = "奖励二"
+alignment = 0
+text_overrun_behavior = 1
+autowrap_mode = 3
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")
+
+[node name="OptionThree" type="Button" parent="ChestPanel/Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 90)
+text = "奖励三"
+alignment = 0
+text_overrun_behavior = 1
+autowrap_mode = 3
+theme_override_styles/normal = SubResource("6")
+theme_override_styles/hover = SubResource("2")

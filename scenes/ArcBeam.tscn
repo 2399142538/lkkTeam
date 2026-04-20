@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ArcBeam.gd" id="1"]
+
+[node name="ArcBeam" type="Line2D"]
+width = 5.0
+default_color = Color(0.54, 0.95, 1, 0.95)
+joint_mode = 1
+begin_cap_mode = 1
+end_cap_mode = 1
+script = ExtResource("1")

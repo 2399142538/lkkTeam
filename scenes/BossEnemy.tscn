@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/BossEnemy.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/ExperienceGem.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/EnemyProjectile.tscn" id="3"]
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 28.0
+
+[node name="BossEnemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1")
+move_speed = 90.0
+max_health = 220
+contact_damage = 3
+experience_drop_scene = ExtResource("2")
+experience_value = 10
+projectile_scene = ExtResource("3")
+volley_interval = 0.85
+volley_count = 10
+projectile_speed = 360.0
+preferred_range = 300.0
+damage_resistance = 0.35
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.93, 0.75, 0.26, 1)
+polygon = PackedVector2Array(0, -30, 24, -12, 28, 14, 0, 30, -28, 14, -24, -12)

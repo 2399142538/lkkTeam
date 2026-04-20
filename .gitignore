@@ -1,0 +1,7 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+
+# Local exports and OS/editor noise
+builds/
+.DS_Store

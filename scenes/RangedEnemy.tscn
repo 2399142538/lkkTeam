@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/RangedEnemy.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/ExperienceGem.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/EnemyProjectile.tscn" id="3"]
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 13.0
+
+[node name="RangedEnemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1")
+move_speed = 95.0
+max_health = 5
+contact_damage = 1
+experience_drop_scene = ExtResource("2")
+experience_value = 2
+projectile_scene = ExtResource("3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.58, 0.55, 0.92, 1)
+polygon = PackedVector2Array(0, -15, 15, 0, 0, 15, -15, 0)
