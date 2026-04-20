@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/ExperienceGem.tscn" id="2"]
+[ext_resource type="SpriteFrames" path="res://assets/enemies/basic_02/idle.tres" id="3"]
+
+[sub_resource type="CircleShape2D" id="1"]
+radius = 21.0
+
+[node name="BasicEnemy2" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1")
+experience_drop_scene = ExtResource("2")
+experience_value = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("1")
+
+[node name="Visual" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("3")
+animation = &"idle"
+autoplay = "idle"
+scale = Vector2(0.63, 0.63)

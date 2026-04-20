@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/Spawner.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/Enemy.tscn" id="2"]
@@ -7,10 +7,12 @@
 [ext_resource type="PackedScene" path="res://scenes/RangedEnemy.tscn" id="5"]
 [ext_resource type="PackedScene" path="res://scenes/BossEnemy.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://scenes/EliteEnemy.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://scenes/BasicEnemy2.tscn" id="8"]
 
 [node name="Spawner" type="Node"]
 script = ExtResource("1")
 basic_enemy_scene = ExtResource("2")
+basic_enemy_variant_scene = ExtResource("8")
 dasher_enemy_scene = ExtResource("3")
 tank_enemy_scene = ExtResource("4")
 ranged_enemy_scene = ExtResource("5")

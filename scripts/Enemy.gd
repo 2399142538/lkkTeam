@@ -10,20 +10,22 @@ signal removed_from_field
 @export var move_speed := 120.0
 @export var max_health := 4
 @export var contact_damage := 1
-@export var formation_contact_radius := 32.0
-@export var enemy_separation_radius := 22.0
+@export var formation_contact_radius := 48.0
+@export var enemy_separation_radius := 33.0
 @export var enemy_separation_push := 3.0
 @export var formation_release_passthrough_time := 0.42
 @export var formation_release_clear_distance := 72.0
 @export var experience_drop_scene: PackedScene
 @export var experience_value := 1
 @export var floating_text_scene: PackedScene = preload("res://scenes/FloatingText.tscn")
-@export var health_bar_offset := Vector2(-22, -32)
+@export var health_bar_offset := Vector2(-33, -48)
 @export var health_bar_size := Vector2(44, 7)
 @export var death_pulse_scene: PackedScene = preload("res://scenes/PulseWave.tscn")
 @export var hit_spark_scene: PackedScene = preload("res://scenes/HitSpark.tscn")
 @export var magnet_pickup_scene: PackedScene = preload("res://scenes/PowerPickup.tscn")
 @export var bomb_pickup_scene: PackedScene = preload("res://scenes/PowerPickup.tscn")
+@export var random_size_min := 0.7
+@export var random_size_max := 1.5
 
 var health := max_health
 var player: CharacterBody2D
@@ -49,22 +51,29 @@ var normal_collision_mask := 0
 var release_passthrough_left := 0.0
 var release_passthrough_direction := Vector2.ZERO
 var release_passthrough_speed := 0.0
+var base_visual_scale := Vector2.ONE
+var random_size_multiplier := 1.0
 
 @onready var visual = $Visual
-@onready var base_color: Color = visual.color
+@onready var base_color: Color = _get_visual_color()
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 
 func _ready() -> void:
 	add_to_group("enemies")
+	if visual is AnimatedSprite2D:
+		_randomize_visual_animation()
 	health = max_health
 	base_move_speed = move_speed
+	base_visual_scale = visual.scale
+	_apply_random_size()
 	normal_collision_mask = collision_mask
 	_setup_health_bar()
 	health_updated.emit(health, max_health)
-	visual.scale = Vector2.ONE * 0.2
+	visual.scale = base_visual_scale * 0.2
 	visual.rotation = -0.18
 	var spawn_tween := create_tween()
-	spawn_tween.tween_property(visual, "scale", Vector2.ONE, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	spawn_tween.tween_property(visual, "scale", base_visual_scale, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	spawn_tween.parallel().tween_property(visual, "rotation", 0.0, 0.18).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 
@@ -274,7 +283,7 @@ func _update_status_effects(delta: float) -> void:
 	if frost_time_left <= 0.0:
 		frost_damage = 0
 		frost_slow_multiplier = 1.0
-	visual.color = visual.color.lerp(tint_target, 0.22)
+	_set_visual_color(_get_visual_color().lerp(tint_target, 0.22))
 
 
 func _setup_health_bar() -> void:
@@ -376,11 +385,11 @@ func _try_drop_power_pickup() -> void:
 
 
 func _flash_hit() -> void:
-	visual.color = Color(1, 1, 1, 1)
+	_set_visual_color(Color(1, 1, 1, 1))
 	var tween := create_tween()
-	tween.tween_property(visual, "scale", Vector2.ONE * 1.08, 0.05)
-	tween.parallel().tween_property(visual, "color", base_color, 0.12)
-	tween.tween_property(visual, "scale", Vector2.ONE, 0.08)
+	tween.tween_property(visual, "scale", base_visual_scale * 1.08, 0.05)
+	tween.parallel().tween_method(_set_visual_color, _get_visual_color(), base_color, 0.12)
+	tween.tween_property(visual, "scale", base_visual_scale, 0.08)
 	_spawn_hit_spark()
 
 
@@ -423,3 +432,42 @@ func _spawn_death_fx() -> void:
 	if effect_root == null:
 		effect_root = get_tree().current_scene
 	effect_root.add_child(pulse_wave)
+
+
+func _get_visual_color() -> Color:
+	if visual is Polygon2D:
+		return visual.color
+	return visual.modulate
+
+
+func _set_visual_color(color: Color) -> void:
+	if visual is Polygon2D:
+		visual.color = color
+	else:
+		visual.modulate = color
+
+
+func _randomize_visual_animation() -> void:
+	var animated_visual := visual as AnimatedSprite2D
+	animated_visual.play("idle")
+	if animated_visual.sprite_frames == null or not animated_visual.sprite_frames.has_animation("idle"):
+		return
+	var frame_count := animated_visual.sprite_frames.get_frame_count("idle")
+	if frame_count <= 0:
+		return
+	animated_visual.frame = randi() % frame_count
+	animated_visual.frame_progress = randf()
+	animated_visual.speed_scale = randf_range(0.86, 1.14)
+
+
+func _apply_random_size() -> void:
+	random_size_multiplier = randf_range(random_size_min, random_size_max)
+	base_visual_scale *= random_size_multiplier
+	formation_contact_radius *= random_size_multiplier
+	enemy_separation_radius *= random_size_multiplier
+	health_bar_offset *= random_size_multiplier
+	health_bar_size *= random_size_multiplier
+	if collision_shape != null and collision_shape.shape is CircleShape2D:
+		collision_shape.shape = collision_shape.shape.duplicate()
+		var circle_shape := collision_shape.shape as CircleShape2D
+		circle_shape.radius *= random_size_multiplier

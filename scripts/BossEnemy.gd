@@ -46,8 +46,8 @@ func _physics_process(delta: float) -> void:
 	if is_preparing_charge:
 		velocity = Vector2.ZERO
 		var flash_strength: float = 0.78 + sin(Time.get_ticks_msec() * 0.018) * 0.18
-		visual.scale = Vector2.ONE * (1.04 + (1.0 - charge_time_left / max(charge_duration, 0.001)) * 0.12)
-		visual.color = Color(1.0, 0.72 + flash_strength * 0.12, 0.34 + flash_strength * 0.18, 1.0)
+		visual.scale = base_visual_scale * (1.04 + (1.0 - charge_time_left / max(charge_duration, 0.001)) * 0.12)
+		_set_visual_color(Color(1.0, 0.72 + flash_strength * 0.12, 0.34 + flash_strength * 0.18, 1.0))
 		if charge_time_left <= 0.0:
 			is_preparing_charge = false
 			_release_charge_skill()
@@ -62,8 +62,8 @@ func _physics_process(delta: float) -> void:
 			volley_cooldown_left = volley_interval
 
 	if not is_preparing_charge:
-		visual.scale = visual.scale.lerp(Vector2.ONE, 0.18)
-		visual.color = visual.color.lerp(base_color, 0.22)
+		visual.scale = visual.scale.lerp(base_visual_scale, 0.18)
+		_set_visual_color(_get_visual_color().lerp(base_color, 0.22))
 
 	move_and_slide()
 	_apply_enemy_separation()

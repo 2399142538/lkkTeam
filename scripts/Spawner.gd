@@ -47,6 +47,7 @@ const STAGE_DIFFICULTY := {
 
 
 @export var basic_enemy_scene: PackedScene
+@export var basic_enemy_variant_scene: PackedScene
 @export var dasher_enemy_scene: PackedScene
 @export var tank_enemy_scene: PackedScene
 @export var ranged_enemy_scene: PackedScene
@@ -620,7 +621,7 @@ func _pick_formation_enemy_scene(local_offset: Vector2, max_center_distance: flo
 			return tank_enemy_scene
 		if dasher_enemy_scene != null:
 			return dasher_enemy_scene
-		return basic_enemy_scene
+		return _pick_basic_enemy_scene()
 
 	if center_ratio <= 0.55:
 		var middle_pool: Array[PackedScene] = []
@@ -631,12 +632,12 @@ func _pick_formation_enemy_scene(local_offset: Vector2, max_center_distance: flo
 		if tank_enemy_scene != null and randf() < 0.18:
 			middle_pool.append(tank_enemy_scene)
 		if middle_pool.is_empty():
-			return basic_enemy_scene
+			return _pick_basic_enemy_scene()
 		return middle_pool[randi() % middle_pool.size()]
 
 	if center_ratio <= 0.8 and dasher_enemy_scene != null and randf() < 0.45:
 		return dasher_enemy_scene
-	return basic_enemy_scene
+	return _pick_basic_enemy_scene()
 
 
 func _update_formation_groups() -> void:
@@ -711,7 +712,7 @@ func _pick_enemy_scene() -> PackedScene:
 	var pool: Array[PackedScene] = []
 
 	for _index in range(5):
-		pool.append(basic_enemy_scene)
+		pool.append(_pick_basic_enemy_scene())
 
 	if current_wave >= 2 and tank_enemy_scene != null:
 		for _index in range(2):
@@ -733,9 +734,15 @@ func _pick_enemy_scene() -> PackedScene:
 			pool.append(tank_enemy_scene)
 
 	if pool.is_empty():
-		return basic_enemy_scene
+		return _pick_basic_enemy_scene()
 
 	return pool[randi() % pool.size()]
+
+
+func _pick_basic_enemy_scene() -> PackedScene:
+	if basic_enemy_variant_scene != null and randf() < 0.5:
+		return basic_enemy_variant_scene
+	return basic_enemy_scene
 
 
 func _spawn_boss() -> void:

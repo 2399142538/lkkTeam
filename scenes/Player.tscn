@@ -5,7 +5,7 @@
 [ext_resource type="SpriteFrames" path="res://assets/characters/player/player_idle.tres" id="3"]
 
 [sub_resource type="CircleShape2D" id="1"]
-radius = 14.0
+radius = 21.0
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(640, 360)
@@ -20,7 +20,7 @@ shape = SubResource("1")
 sprite_frames = ExtResource("3")
 animation = &"idle"
 autoplay = "idle"
-scale = Vector2(0.14, 0.14)
+scale = Vector2(0.21, 0.21)
 
 [node name="Weapon" parent="." instance=ExtResource("2")]
 
